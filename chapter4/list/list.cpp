@@ -1,0 +1,164 @@
+#include "list.h"
+
+template <class T>
+struct Node
+{
+  Node* pred;
+  Node* succ;
+  T value;
+};
+
+////////////// LIST CLASS DEFINITION //////////////
+
+template <class T>
+List<T>::List()
+{
+  Node<T>* n = new Node<T>();
+  n->pred = n;
+  n->succ = n;
+}
+
+template <class T>
+bool List<T>::empty()
+{
+  return (this->first_node->pred ==
+          this->first_node->succ ==
+          this->first_node);
+}
+
+template <class T>
+List_iterator<T> List<T>::begin()
+{
+  return List_iterator<T>(first_node->succ);
+}
+
+template <class T>
+List_iterator<T> List<T>::end()
+{
+  //return first invalid value (so that it allows looping using != condition)
+  return List_iterator<T>(first_node);
+}
+
+template <class T>
+bool List<T>::finished(iterator p)
+{
+  return (p.node == first_node);
+}
+
+template <class T>
+void List<T>::write(iterator p, T v)
+{
+  p.node->value = v;
+}
+
+template <class T>
+void List<T>::insert_before(iterator p, T v)
+{
+  Node<T>* t = new Node<T>();
+  t->value = v;
+  t->pred = p.node->pred;
+  t->pred.succ = t;
+  t->succ = p.node;
+  p.node->pred = t;
+}
+
+//the iterator is passed by reference because after the deletion it is moved
+//to the next element
+template <class T>
+void List<T>::remove(iterator& p)
+{
+  Node<T>* t;
+  p.node->pred.succ = p.node->succ;
+  p.node->succ.pred = p.node->pred;
+  t = p.node;
+  p++;
+  delete t;
+}
+
+
+template <class T>
+List <T>::~List()
+{
+  Node<T> *n = begin();
+  while (n != end())
+  {
+    Node<T> *next = n->succ;
+    delete n;
+    n = next;
+  }
+  delete n;
+}
+
+////////////// LIST_ITERATOR CLASS DECLARATION AND DEFINITION //////////////
+
+template <class T>
+class List_iterator
+{
+public:
+  typedef List_iterator<T> iterator;
+
+  List_iterator(Node<T> *node): node(node) { }
+  List_iterator(): node(0) { }
+
+  T& operator*();
+  bool operator==(const iterator & rhs) const;
+  bool operator!=(const iterator & rhs) const;
+  iterator& operator++();
+  iterator operator++(int);
+  iterator& operator--();
+  iterator operator--(int);
+
+private:
+  Node<T> *node;
+
+  friend class List<T>;
+};
+
+
+template <class T>
+T& List_iterator<T>::operator*()
+{
+  return node->value;
+}
+
+template <class T>
+List_iterator<T>& List_iterator<T>::operator++()
+{
+  node = node->succ;
+  return *this;
+}
+
+template <class T>
+List_iterator<T> List_iterator<T>::operator++(int)
+{
+  List_iterator orig = *this;
+  ++(*this);
+  return orig;
+}
+
+template <class T>
+List_iterator<T>& List_iterator<T>::operator--()
+{
+  node = node->prec;
+  return *this;
+}
+
+template <class T>
+List_iterator<T> List_iterator<T>::operator--(int)
+{
+  List_iterator orig = *this;
+  --(*this);
+  return orig;
+}
+
+template<class T>
+bool List_iterator<T>::operator==(const iterator& lit) const
+{
+    return (this->node == lit.node);
+}
+
+template <class T>
+bool List_iterator<T>::operator!=(const iterator& lit) const
+{
+    return !(this->node == lit.node);
+}
