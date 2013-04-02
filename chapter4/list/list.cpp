@@ -16,14 +16,23 @@ List<T>::List()
   Node<T>* n = new Node<T>();
   n->pred = n;
   n->succ = n;
+  first_node = n;
 }
+/*
+template <class T>
+List<T>::List(const List<T>& li)
+{
+  for (iterator it=li.begin(); it!=li.end(); it++)
+  {
+    insert_before(end(),*it);
+  }
+  }*/
 
 template <class T>
 bool List<T>::empty()
 {
-  return (this->first_node->pred ==
-          this->first_node->succ ==
-          this->first_node);
+  return ((this->first_node->pred == this->first_node->succ) &&
+          (this->first_node->succ == this->first_node));
 }
 
 template <class T>
@@ -57,7 +66,7 @@ void List<T>::insert_before(iterator p, T v)
   Node<T>* t = new Node<T>();
   t->value = v;
   t->pred = p.node->pred;
-  t->pred.succ = t;
+  t->pred->succ = t;
   t->succ = p.node;
   p.node->pred = t;
 }
@@ -68,8 +77,8 @@ template <class T>
 void List<T>::remove(iterator& p)
 {
   Node<T>* t;
-  p.node->pred.succ = p.node->succ;
-  p.node->succ.pred = p.node->pred;
+  p.node->pred->succ = p.node->succ;
+  p.node->succ->pred = p.node->pred;
   t = p.node;
   p++;
   delete t;
@@ -79,41 +88,34 @@ void List<T>::remove(iterator& p)
 template <class T>
 List <T>::~List()
 {
-  Node<T> *n = begin();
-  while (n != end())
+  iterator it = begin();
+  while (!empty())
   {
-    Node<T> *next = n->succ;
-    delete n;
-    n = next;
+    remove(it);
   }
-  delete n;
 }
 
-////////////// LIST_ITERATOR CLASS DECLARATION AND DEFINITION //////////////
-
+/*
 template <class T>
-class List_iterator
+List<T>& List<T>::operator=(const List& li)
 {
-public:
-  typedef List_iterator<T> iterator;
+  if (&li != this)
+  {
+    while (!empty())
+    {
+      remove(begin());
+    }
+    for (iterator it=li.begin(); it!=li.end(); it++)
+    {
+      insert_before(end(),*it);
+    }
+  }
+  return *this;
+  }*/
 
-  List_iterator(Node<T> *node): node(node) { }
-  List_iterator(): node(0) { }
+template class List<int>;
 
-  T& operator*();
-  bool operator==(const iterator & rhs) const;
-  bool operator!=(const iterator & rhs) const;
-  iterator& operator++();
-  iterator operator++(int);
-  iterator& operator--();
-  iterator operator--(int);
-
-private:
-  Node<T> *node;
-
-  friend class List<T>;
-};
-
+////////////// LIST_ITERATOR CLASS DEFINITION //////////////
 
 template <class T>
 T& List_iterator<T>::operator*()
@@ -136,10 +138,11 @@ List_iterator<T> List_iterator<T>::operator++(int)
   return orig;
 }
 
+
 template <class T>
 List_iterator<T>& List_iterator<T>::operator--()
 {
-  node = node->prec;
+  node = node->pred;
   return *this;
 }
 
@@ -162,3 +165,5 @@ bool List_iterator<T>::operator!=(const iterator& lit) const
 {
     return !(this->node == lit.node);
 }
+
+template class List_iterator<int>;
