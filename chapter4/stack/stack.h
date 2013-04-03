@@ -10,7 +10,7 @@
 template <class T>
 class Stack {
 public:
-  Stack(int dim);
+  Stack(int);
 
   T top();
 
@@ -18,7 +18,7 @@ public:
 
   T pop();
 
-  void push(T v);
+  void push(T);
 
   ~Stack();
 
