@@ -26,7 +26,7 @@ int main()
     cout << *it << endl;
   }
   cout << endl;
-  for (it=--l.end(); !(it==l.begin()); it--)
+  for (it=--l.end(); it!=l.begin(); it--)
   {
     cout << *it << endl;
   }
