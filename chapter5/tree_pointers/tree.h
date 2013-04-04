@@ -26,6 +26,9 @@ public:
 
   T value() {return _value;}
 
+  Tree* rightSibling() { return sibling;}
+  Tree* leftmostChild() { return child;}
+
 private:
   T _value;
   Tree* parent;
@@ -55,17 +58,23 @@ void Tree<T>::insertSibling(Tree& t)
 template <class T>
 void Tree<T>::deleteChild()
 {
-  Tree* newChild = child->sibling;
-  delete(child);
-  child = newChild;
+  if (child)
+  {
+    Tree* newChild = child->sibling;
+    delete(child);
+    child = newChild;
+  }
 }
 
 template <class T>
 void Tree<T>::deleteSibling()
 {
-  Tree* newBrother = sibling->sibling;
-  delete(sibling);
-  sibling = newBrother;
+  if (sibling)
+  {
+    Tree* newBrother = sibling->sibling;
+    delete(sibling);
+    sibling = newBrother;
+  }
 }
 
 template <class T>

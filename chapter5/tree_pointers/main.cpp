@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "tree.h"
 
 using namespace std;
@@ -15,11 +13,17 @@ void build_tree(Tree<int>& t)
       t.insertChild(*tmp);
     }
   }
+  t.deleteChild();
 }
 
 int main()
 {
   Tree<int> t(0);
   build_tree(t);
-  cout << endl;
+  Tree<int>* tmp = &t;
+  while ((tmp = tmp->leftmostChild()))
+  {
+    tmp->deleteSibling();
+  }
+  t.deleteChild();
 }
