@@ -1,5 +1,11 @@
-#include <iostream>
+/*
+ * Chapter 4
+ * Paragraph 3
+ *
+ * Stack data structure usage
+ */
 
+#include <iostream>
 #include "stack.h"
 
 using namespace std;

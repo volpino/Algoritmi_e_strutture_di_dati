@@ -1,5 +1,8 @@
 /*
- * LICENSE
+ * Chapter 4
+ * Paragraph 3
+ *
+ * Stack data structure implementation
  */
 
 #ifndef STACK_H

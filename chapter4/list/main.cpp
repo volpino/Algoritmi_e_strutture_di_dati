@@ -1,5 +1,11 @@
-#include <iostream>
+/*
+ * Chapter 4
+ * Paragraph 1
+ *
+ * List data structure usage
+ */
 
+#include <iostream>
 #include "list.h"
 
 using namespace std;

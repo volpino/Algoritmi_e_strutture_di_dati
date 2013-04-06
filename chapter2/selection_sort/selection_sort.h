@@ -1,5 +1,8 @@
 /*
+ * Chapter 2
+ * Paragraph 3
  *
+ * Selection sort algorithm implementation
  */
 
 #ifndef SELECTION_SORT_H

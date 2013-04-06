@@ -1,3 +1,10 @@
+/*
+ * Chapter 5
+ * Paragraph 4
+ *
+ * Tree structure (with parents vector) usage
+ */
+
 #include "tree.h"
 
 #include <iostream>

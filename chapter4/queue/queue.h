@@ -1,3 +1,10 @@
+/*
+ * Chapter 4
+ * Paragraph 3
+ *
+ * Queue data structure implementation
+ */
+
 #ifndef QUEUE_H
 #define QUEUE_H
 

@@ -1,14 +1,16 @@
 /*
+ * Chapter 2
+ * Paragraph 3
  *
+ * Selection sort algorithm usage
  */
 
 #include <iostream>
-
 #include "selection_sort.h"
 
-const int dim = 100;
-
 using namespace std;
+
+const int dim = 100;
 
 int main()
 {

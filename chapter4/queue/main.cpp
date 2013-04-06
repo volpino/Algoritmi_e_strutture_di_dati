@@ -1,5 +1,11 @@
-#include <iostream>
+/*
+ * Chapter 4
+ * Paragraph 3
+ *
+ * Queue data structure usage
+ */
 
+#include <iostream>
 #include "queue.h"
 
 using namespace std;

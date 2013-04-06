@@ -1,5 +1,8 @@
 /*
- * LICENSE
+ * Chapter 4
+ * Paragraph 1
+ *
+ * List data structure implementation
  */
 
 #ifndef LIST_H

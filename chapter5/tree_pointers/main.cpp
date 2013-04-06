@@ -1,3 +1,10 @@
+/*
+ * Chapter 5
+ * Paragraph 4
+ *
+ * Tree data structure usage (pointers to parent, child and sibling)
+ */
+
 #include "tree.h"
 
 using namespace std;

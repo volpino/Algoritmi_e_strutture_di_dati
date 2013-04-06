@@ -1,5 +1,8 @@
 /*
+ * Chapter 2
+ * Paragraph 3
  *
+ * Merge sort algorithm implementation
  */
 
 #ifndef MERGE_SORT_H

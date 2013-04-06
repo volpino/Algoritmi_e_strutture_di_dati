@@ -1,5 +1,8 @@
 /*
+ * Chapter 5
+ * Paragraph 4
  *
+ * Tree structure (with parents vector) declaration
  */
 
 #ifndef TREE_H

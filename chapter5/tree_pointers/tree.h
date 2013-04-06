@@ -1,11 +1,12 @@
 /*
+ * Chapter 5
+ * Paragraph 4
  *
- *
+ * Tree data structure implementation (pointers to parent, child and sibling)
  */
 
 #ifndef TREE_H
 #define TREE_H
-
 
 template <class T>
 class Tree {
