@@ -8,17 +8,17 @@
 #include <iostream>
 #include "selection_sort.h"
 
-using namespace std;
+#define DIM 100
 
-const int dim = 100;
+using namespace std;
 
 int main()
 {
-  int a[dim];
-  for (int i=0; i<dim; i++)
-    a[i] = dim-i;
-  selection_sort(a,dim);
-  for (int i=0; i<dim; i++)
+  int a[DIM];
+  for (int i=0; i<DIM; i++)
+    a[i] = DIM-i;
+  selection_sort(a,DIM);
+  for (int i=0; i<DIM; i++)
     cout << a[i] << " ";
   cout << endl;
   return 0;

@@ -14,7 +14,8 @@ void merge(T A[], int first, int last, int m)
   int i, j, k, h;
   //This can be optimized allocating support vector B outside merge function
   //and passing it as parameter
-  T* B = new T[last+1];
+  T* B;
+  B = new T[last+1];
   i = first;
   j = m+1;
   k = first;

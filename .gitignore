@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+*.gch
 
 # Compiled Dynamic libraries
 *.so
@@ -17,6 +18,5 @@
 
 # ddd files
 core
-*.gch
 
 a.out
