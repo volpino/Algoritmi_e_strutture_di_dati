@@ -14,8 +14,8 @@ using namespace std;
 int main()
 {
   int A[] = {-20, 2, 4, 9, 34, 42, 67, 234};
-  cout << binarysearch(A, 4, 0, 8) << endl;
-  cout << binarysearch(A, -20, 0, 8) << endl;
-  cout << binarysearch(A, 234, 0, 8) << endl;
+  cout << binarysearch(A, 4, 0, 7) << endl;
+  cout << binarysearch(A, -20, 0, 7) << endl;
+  cout << binarysearch(A, 234, 0, 7) << endl;
   return 0;
 }

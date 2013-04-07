@@ -11,7 +11,7 @@
 template <class T>
 T binarysearch(T A[], T v, int i, int j) {
   if (i > j)
-    return 0;
+    return -1;
 
   int m = (i + j) / 2;  // integer division
   if (A[m] == v)
