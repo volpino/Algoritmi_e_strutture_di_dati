@@ -7,7 +7,7 @@
 
 
 public class IterativeBinarySearch {
-    public static <T extends Comparable<? super T>> Object search(T A[], T v) {
+    public static <T extends Comparable<? super T>> int search(T A[], T v) {
         int i = 0;
         int j = A.length - 1;
         int m = (i + j) / 2;  // integer division
@@ -21,7 +21,7 @@ public class IterativeBinarySearch {
         }
 
         if (i > j || A[m].compareTo(v) != 0)
-            return null;
+            return -1;
         return m;
     }
 

@@ -7,7 +7,7 @@
 
 
 public class Min {
-    public static <T extends Comparable<? super T>> Object min(T A[]) {
+    public static <T extends Comparable<? super T>> T min(T A[]) {
         if (A.length == 0)
             return null;
 
