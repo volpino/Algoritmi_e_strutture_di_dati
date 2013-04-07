@@ -10,8 +10,11 @@
 
 template <class T>
 T min(T A[], int n) {
-  T min_value = A[1];
-  for (int i=2; i<n; i++) {
+  if (n <= 0)
+    return -1;
+
+  T min_value = A[0];
+  for (int i=1; i<n; i++) {
     if (A[i] < min_value)
       min_value = A[i];
   }
