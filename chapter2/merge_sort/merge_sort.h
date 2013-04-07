@@ -11,7 +11,7 @@
 template <class T>
 void merge(T A[], int first, int last, int m)
 {
-  int i, j, k, h;
+  int i, j, k;
   //This can be optimized allocating support vector B outside merge function
   //and passing it as parameter
   T* B;
