@@ -59,7 +59,7 @@ public class MergeSort {
       A[j] = B[j];
   }
 
-  public static void main() {
+  public static void main(String args[]) {
     Integer A[] = new Integer[100];
     for (int i=0; i<100; i++)
     {
