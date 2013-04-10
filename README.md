@@ -1,2 +1,3 @@
-Algoritmi_e_strutture_di_dati
+Algoritmi e strutture di dati
 =============================
+Alan A. Bertossi, Alberto Montresor (Brossura)
