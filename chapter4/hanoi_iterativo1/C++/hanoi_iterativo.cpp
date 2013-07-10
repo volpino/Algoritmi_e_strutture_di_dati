@@ -41,7 +41,7 @@ void hanoi_iterativa(int n, int origine, int destinazione, int intermedio) {
       intermedio = array[3];
       delete array;
       cout << "Trasferisci un disco da " << origine << " a " << destinazione << endl;
-      n = n - 1;
+      n--;
       temp = origine;
       origine = intermedio;
       intermedio = temp;
