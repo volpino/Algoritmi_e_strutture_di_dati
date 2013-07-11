@@ -56,7 +56,7 @@ BinaryTree<T>* BinaryTree<T>::lookupNode(T x)
 }
 
 template <class T>
-void BinaryTree<T>::link(BinaryTree* u, T x)
+void BinaryTree<T>::link(BinaryTree<T>* u, T x)
 {
   BinaryTree<T>* v = this;
   if (u != 0) {
@@ -86,7 +86,7 @@ void BinaryTree<T>::insertNode(T x, T v)
     u->_value = v;
   }
   else {
-    BinaryTree* n = new BinaryTree<T>(x, v);
+    BinaryTree<T>* n = new BinaryTree<T>(x, v);
     s->link(n, x);
   }
 }
@@ -98,7 +98,7 @@ void BinaryTree<T>::removeNode(T x)
   BinaryTree<T>* u = this->lookupNode(x);
   if (u != 0) {
     if (u->left != 0 && u->right != 0) {
-      BinaryTree* s = u->right;
+      BinaryTree<T>* s = u->right;
       while (s->left != 0) {
         s = s->left;
       }
@@ -164,7 +164,7 @@ BinaryTree<T>* BinaryTree<T>::successorNode()
   if (t->right != 0) {
     return t->right->min();
   }
-  BinaryTree* s = t->parent;
+  BinaryTree<T>* s = t->parent;
   while (s != 0 && t == s->right) {
     t = s;
     s = s->parent;
@@ -191,7 +191,6 @@ BinaryTree<T>* BinaryTree<T>::predecessorNode()
   return s;
 }
 
-#include<iostream>
 template <class T>
 BinaryTree<T>::~BinaryTree()
 {
