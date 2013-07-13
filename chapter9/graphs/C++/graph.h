@@ -8,7 +8,7 @@ class Node {
 public:
   T key;
   T value;
-  T id;
+  int id;
 
   Node(T k, T v) {
     key = k;
@@ -23,8 +23,8 @@ public:
   virtual void insertEdge(Node<T>*, Node<T>*) = 0;
   virtual void deleteNode(Node<T>*) = 0;
   virtual void deleteEdge(Node<T>*, Node<T>*) = 0;
-  virtual std::set<Node<T>* > adj() = 0;
-  virtual std::set<Node<T>* > v() = 0;
+  virtual std::set<Node<T>* >* adj(Node<T>*) = 0;
+  virtual std::set<Node<T>* >* v() = 0;
 };
 
 #endif

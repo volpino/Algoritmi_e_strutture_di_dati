@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include "functions.h"
 #include <iostream>
 
 using namespace std;
@@ -22,6 +23,10 @@ int main() {
   g.insertEdge(a, b);
   g.insertEdge(a, d);
   g.insertEdge(d, c);
+
+  cout << "Simple visit: " << endl;
+  visita(g, a);
+  cout << endl << endl;
 
   cout << "Vicini del nodo 1:";
   set<Node<int>* >* a_adj = g.adj(a);

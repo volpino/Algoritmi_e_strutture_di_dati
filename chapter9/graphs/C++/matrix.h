@@ -6,7 +6,7 @@
 using namespace std;
 
 template <class T>
-class MatrixGraph {
+class MatrixGraph : public Graph<T> {
 public:
   MatrixGraph(int num_vertex) {
     this->num_vertex = num_vertex;
@@ -75,8 +75,8 @@ public:
     return adjacent_set;
   };
 
-  virtual set<Node<T>* > v() {
-    return vertices;
+  virtual set<Node<T>* >* v() {
+    return &vertices;
   };
 
   ~MatrixGraph() {
