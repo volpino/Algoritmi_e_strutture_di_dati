@@ -28,6 +28,10 @@ int main() {
   visita(g, a);
   cout << endl << endl;
 
+  cout << "BFS: " << endl;
+  bfs(g, a);
+  cout << endl << endl;
+
   cout << "Vicini del nodo 1:";
   set<Node<int>* >* a_adj = g.adj(a);
   for (set<Node<int>* >::iterator it=a_adj->begin(); it != a_adj->end(); it++) {
