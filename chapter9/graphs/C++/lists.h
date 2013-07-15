@@ -4,6 +4,7 @@
 #include "graph.h"
 #include <set>
 #include <vector>
+#include <map>
 using namespace std;
 
 template <class T>
@@ -19,11 +20,11 @@ public:
   };
 
   virtual void insertNode(Node<T>* node) {
-    if (available_ids.empty()) {
+    if (available_ids.empty() || vertices.find(node) != vertices.end()) {
       return;
     }
-    node->id = *available_ids.begin();
-    available_ids.erase(node->id);
+    node_ids[node] = *available_ids.begin();
+    available_ids.erase(id(node));
     vertices.insert(node);
   };
 
@@ -31,16 +32,16 @@ public:
     if (vertices.find(a) == vertices.end() || vertices.find(b) == vertices.end()) {
       return;
     }
-    adj_list[a->id].push_back(b);
+    adj_list[id(a)].push_back(b);
   };
 
   virtual void deleteNode(Node<T>* node) {
-    if (node->id >= num_vertex || available_ids.find(node->id) != available_ids.end()) {
+    if (id(node) >= this->num_vertex || available_ids.find(id(node)) != available_ids.end()) {
       return;
     }
     vertices.erase(node);
-    adj_list[node->id].clear();
-    available_ids.insert(node->id);
+    adj_list[id(node)].clear();
+    available_ids.insert(id(node));
 
     // removing incoming edges
     for (int i=0; i<adj_list.size(); i++) {
@@ -59,9 +60,9 @@ public:
     if (vertices.find(a) == vertices.end() || vertices.find(b) == vertices.end()) {
       return;
     }
-    for (int i=0; i<adj_list[a->id].size(); i++) {
-      if (adj_list[a->id][i] == b) {
-        adj_list[a->id].erase(adj_list[a->id].begin()+i);
+    for (int i=0; i<adj_list[id(a)].size(); i++) {
+      if (adj_list[id(a)][i] == b) {
+        adj_list[id(a)].erase(adj_list[id(a)].begin()+i);
         break;
       }
     }
@@ -72,8 +73,8 @@ public:
       return 0;
     }
     set<Node<T>* >* adjacent_set = new set<Node<T>* >();
-    for (int i=0; i<adj_list[node->id].size(); i++) {
-      adjacent_set->insert(adj_list[node->id][i]);
+    for (int i=0; i<adj_list[id(node)].size(); i++) {
+      adjacent_set->insert(adj_list[id(node)][i]);
     }
 
     return adjacent_set;
@@ -83,14 +84,18 @@ public:
     return &vertices;
   };
 
+  virtual int id(Node<T>* node) {
+    return node_ids[node];
+  };
+
   ~ListsGraph() {
   };
 
 private:
-  int num_vertex;
   vector<vector<Node<T>* > > adj_list;
   set<Node<T>* > vertices;
   set<int> available_ids;
+  map<Node<T>*, int> node_ids;
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "graph.h"
 #include <set>
+#include <map>
 using namespace std;
 
 template <class T>
@@ -29,37 +30,37 @@ public:
     if (available_ids.empty()) {
       return;
     }
-    node->id = *available_ids.begin();
-    available_ids.erase(node->id);
+    node_ids[node] = *available_ids.begin();
+    available_ids.erase(id(node));
     vertices.insert(node);
-    vertices_ids[node->id] = node;
+    vertices_ids[id(node)] = node;
   };
 
   virtual void insertEdge(Node<T>* a, Node<T>* b) {
     if (vertices.find(a) == vertices.end() || vertices.find(b) == vertices.end()) {
       return;
     }
-    matrix[a->id][b->id]++;
+    matrix[id(a)][id(b)]++;
   };
 
   virtual void deleteNode(Node<T>* node) {
-    if (node->id >= num_vertex || available_ids.find(node->id) != available_ids.end()) {
+    if (id(node) >= this->num_vertex || available_ids.find(id(node)) != available_ids.end()) {
       return;
     }
     vertices.erase(node);
-    for (int i=0; i<num_vertex; i++) {
-      matrix[node->id][i] = 0;
-      matrix[i][node->id] = 0;
+    for (int i=0; i<this->num_vertex; i++) {
+      matrix[id(node)][i] = 0;
+      matrix[i][id(node)] = 0;
     }
-    available_ids.insert(node->id);
+    available_ids.insert(id(node));
   };
 
   virtual void deleteEdge(Node<T>* a, Node<T>* b) {
     if (vertices.find(a) == vertices.end() || vertices.find(b) == vertices.end()) {
       return;
     }
-    if (matrix[a->id][b->id] > 0) {
-      matrix[a->id][b->id]--;
+    if (matrix[id(a)][id(b)] > 0) {
+      matrix[id(a)][id(b)]--;
     }
   };
 
@@ -68,8 +69,8 @@ public:
       return 0;
     }
     set<Node<T>* >* adjacent_set = new set<Node<T>* >();
-    for (int i=0; i<num_vertex; i++) {
-      if (matrix[node->id][i] != 0) {
+    for (int i=0; i<this->num_vertex; i++) {
+      if (matrix[id(node)][i] != 0) {
         adjacent_set->insert(vertices_ids[i]);
       }
     }
@@ -81,19 +82,23 @@ public:
     return &vertices;
   };
 
+  virtual int id(Node<T>* node) {
+    return node_ids[node];
+  };
+
   ~MatrixGraph() {
     delete[] vertices_ids;
-    for (int i=0; i<num_vertex; i++) {
+    for (int i=0; i<this->num_vertex; i++) {
       delete[] matrix[i];
     }
   };
 
 private:
-  int num_vertex;
   int** matrix;
   set<Node<T>* > vertices;
   Node<T>** vertices_ids;
   set<int> available_ids;
+  map<Node<T>*, int> node_ids;
 };
 
 #endif

@@ -8,7 +8,6 @@ class Node {
 public:
   T key;
   T value;
-  int id;
 
   Node(T k, T v) {
     key = k;
@@ -25,6 +24,9 @@ public:
   virtual void deleteEdge(Node<T>*, Node<T>*) = 0;
   virtual std::set<Node<T>* >* adj(Node<T>*) = 0;
   virtual std::set<Node<T>* >* v() = 0;
+  virtual int id(Node<T>*) = 0;
+
+  int num_vertex;
 };
 
 #endif
