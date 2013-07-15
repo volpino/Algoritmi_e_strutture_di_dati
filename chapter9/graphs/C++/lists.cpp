@@ -1,11 +1,11 @@
-#include "matrix.h"
+#include "lists.h"
 #include "functions.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
-  MatrixGraph<int> g = MatrixGraph<int>(100);
+  ListsGraph<int> g = ListsGraph<int>(100);
   Node<int>* a = new Node<int>(1, 1);
   Node<int>* b = new Node<int>(2, 2);
   Node<int>* c = new Node<int>(3, 3);

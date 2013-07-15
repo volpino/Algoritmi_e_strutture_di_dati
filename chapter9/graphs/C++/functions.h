@@ -69,4 +69,39 @@ void bfs(Graph<T>& g, Node<T>* r) {
 };
 
 
+/* Chapter 9
+ * Paragraph 5.1
+ */
+template<class T>
+void erdos(Graph<T>& g, Node<T>* r) {
+}
+
+
+/* Chapter 9
+ * Paragraph 5.4
+ */
+template<class T>
+void dfs(Graph<T>& g, Node<T>* u) {
+  set<Node<T>* > visited;
+  dfs_rec(g, u, visited);
+}
+
+
+template<class T>
+void dfs_rec(Graph<T>& g, Node<T>* u, set<Node<T>* >& visited) {
+  typedef typename set<Node<T>* >::iterator iter;
+
+  visited.insert(u);
+  cout << "Visiting node: " << u->key << "=" << u->value << endl;
+  set<Node<T>* >* adj = g.adj(u);
+  for (iter it=adj->begin(); it != adj->end(); it++) {
+    Node<T>* v = *it;
+    if (visited.find(v) == visited.end()) {
+      visited.insert(v);
+      dfs_rec(g, v, visited);
+    }
+  }
+  delete adj;
+}
+
 #endif
