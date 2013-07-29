@@ -48,6 +48,13 @@ public class Tree<T> {
     }
   }
 
+  public static void main(String args[])
+  {
+    Tree<Integer> t = new Tree(0);
+    build_tree(t, 3);
+    print_tree(t);
+  }
+
   static void build_tree(Tree t, int depth)
   {
     if (depth > 0)
@@ -68,12 +75,5 @@ public class Tree<T> {
       print_tree(t.sibling);
     if (t.child != null)
       print_tree(t.child);
-  }
-
-  public static void main(String args[])
-  {
-    Tree<Integer> t = new Tree(0);
-    build_tree(t, 3);
-    print_tree(t);
   }
 }
