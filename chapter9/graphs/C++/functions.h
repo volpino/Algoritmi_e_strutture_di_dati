@@ -323,7 +323,7 @@ void topSort(Graph<T>& g, vector<Node<T>* >& ordine) {
 }
 
 template<class T>
-int ts_dfs(Graph<T>& g, Node<T>* u, set<Node<T>* >& visited, vector<Node<T>* >& ordine) {
+void ts_dfs(Graph<T>& g, Node<T>* u, set<Node<T>* >& visited, vector<Node<T>* >& ordine) {
   typedef typename set<Node<T>* >::iterator iter;
 
   visited.insert(u);
