@@ -86,6 +86,10 @@ public:
     return node_ids[node];
   };
 
+  virtual int w(Node<T>* a, Node<T>* b) {
+    return matrix[id(a)][id(b)];
+  }
+
   ~MatrixGraph() {
     delete[] vertices_ids;
     for (int i=0; i<this->num_vertex; i++) {

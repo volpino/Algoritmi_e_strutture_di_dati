@@ -88,6 +88,20 @@ public:
     return node_ids[node];
   };
 
+  virtual int w(Node<T>* a, Node<T>* b) {
+    // not efficient, just for teaching purposes. As the book does not cover
+    // the implementation of a graph with weighted edges, here it is a
+    // simplification of it, needed for implementing other algorithms such as
+    // Dijkstra's algorithm for shortest path.
+    int count = 0;
+    for (int i=0; i<adj_list[id(a)].size(); i++) {
+      if (adj_list[id(a)][i] == b) {
+        count++;
+      }
+    }
+    return count;
+  };
+
   ~ListsGraph() {
   };
 
