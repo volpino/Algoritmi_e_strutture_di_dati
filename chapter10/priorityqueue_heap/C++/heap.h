@@ -3,13 +3,11 @@
 
 /*
  * Chapter 10
- * Paragraph 3
+ * Paragraph 1.3
  *
  * Heap priority queue data structure
  */
 
-#include <iostream>
-using namespace std;
 
 template <class T>
 class HeapItem {
