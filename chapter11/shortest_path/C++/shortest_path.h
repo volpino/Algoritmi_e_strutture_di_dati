@@ -98,6 +98,17 @@ public:
 
   virtual void alreadySeen(Node<T>* node, int weight) {
     node->cost = weight;
+
+    // this is inefficient and only for not having to increase the complexity
+    // of the code by using a custom priority queue. Unfortunately the STL
+    // priority queue does not allow to update the priority of an item.
+    priority_queue<Node<T>* > newqueue;
+    while (!s.empty()) {
+      Node<T>* tmp = s.top();
+      s.pop();
+      newqueue.push(tmp);
+    }
+    swap(s, newqueue);
   };
 };
 
