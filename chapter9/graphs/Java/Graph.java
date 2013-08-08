@@ -10,4 +10,5 @@ public interface Graph<T extends Comparable<? super T>> {
     Set<Node<T> > v();
     int id(Node<T> node);
     int numVertex();
+    int w(Node<T> a, Node<T> b);
 }

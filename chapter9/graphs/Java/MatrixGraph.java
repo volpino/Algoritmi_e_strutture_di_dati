@@ -93,6 +93,10 @@ public class MatrixGraph<T extends Comparable<? super T>> implements Graph<T> {
         return num_vertex;
     }
 
+    public int w(Node<T> a, Node<T> b) {
+        return matrix[id(a)][id(b)];
+    }
+
     public static void main(String args[]) {
         GraphTestFunctions.test(new MatrixGraph<Integer>(10));
     }

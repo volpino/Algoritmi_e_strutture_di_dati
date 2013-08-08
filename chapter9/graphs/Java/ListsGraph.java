@@ -84,6 +84,20 @@ public class ListsGraph<T extends Comparable<? super T>> implements Graph<T> {
         return num_vertex;
     }
 
+    public int w(Node<T> a, Node<T> b) {
+        // not efficient, just for teaching purposes. As the book does not cover
+        // the implementation of a graph with weighted edges, here it is a
+        // simplification of it, needed for implementing other algorithms such as
+        // Dijkstra's algorithm for shortest path.
+        int count = 0;
+        for (int i=0; i<adj_list.get(id(a)).size(); i++) {
+            if (adj_list.get(id(a)).get(i) == b) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void main(String args[]) {
         GraphTestFunctions.test(new ListsGraph<Integer>(10));
     }
