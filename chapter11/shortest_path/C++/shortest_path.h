@@ -8,7 +8,7 @@
 #ifndef SHORTEST_PATH_H
 #define SHORTEST_PATH_H
 
-#include "../../../chapter9/graphs/C++/lists.h"
+#include "../../../chapter09/graphs/C++/lists.h"
 #include <queue>
 #include <deque>
 #include <iostream>
