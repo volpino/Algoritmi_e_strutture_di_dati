@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <cassert>
+#include <iostream>
+using namespace std;
 
 template <class Key, class T>
 class RBTree {
@@ -12,14 +14,14 @@ public:
     BLACK = 1,
   };
 
-  RBTree(Key k, T v) : _key(k), _value(v), color(RED),
+  RBTree(Key k, T v) : _key(k), _value(v), color(BLACK),
                        left(NULL), right(NULL), parent(NULL) { }
 
   RBTree<Key,T>* lookupNode(Key);
 
-  void insertNode(Key, T);
+  RBTree<Key,T>* insertNode(Key, T);
 
-  void removeNode(Key);
+  RBTree<Key,T>* removeNode(Key);
 
   void checkTree()
   {
@@ -45,8 +47,8 @@ public:
 
   int blackHeight()
   {
-    int s = this->left ? this->left->blackHeight() : 0;
-    int r = this->right ? this->right->blackHeight() : 0;
+    int s = this->left ? this->left->blackHeight() : 1;
+    int r = this->right ? this->right->blackHeight() : 1;
     assert(s==r);
     if (this->color == BLACK)
       s++;
@@ -56,7 +58,7 @@ public:
 private:
   void balanceInsert();
 
-  void balanceDelete(RBTree*);
+  void balanceDelete(RBTree*,RBTree*);
 
   void link(RBTree*, Key);
 
@@ -100,7 +102,7 @@ void RBTree<Key, T>::link(RBTree<Key, T>* u, Key x)
 }
 
 template <class Key, class T>
-void RBTree<Key,T>::insertNode(Key x, T v)
+RBTree<Key, T>* RBTree<Key,T>::insertNode(Key x, T v)
 {
   RBTree<Key, T>* s = NULL;
   RBTree<Key, T>* u = this;
@@ -117,15 +119,22 @@ void RBTree<Key,T>::insertNode(Key x, T v)
   else
   {
     RBTree<Key,T>* n = new RBTree<Key, T>(x, v);
+    n->color = RED;
     s->link(n, x);
     n->balanceInsert();
   }
+  //return the new root
+  u = this;
+  while(u->parent)
+    u = u->parent;
+  return u;
 }
 
 template <class Key, class T>
-void RBTree<Key,T>::removeNode(Key x)
+RBTree<Key,T>* RBTree<Key,T>::removeNode(Key x)
 {
-  RBTree<Key,T>* u = this->lookupNode(x);
+  RBTree<Key,T>* Tr = this;
+  RBTree<Key,T>* u = Tr->lookupNode(x);
   if (u != NULL)
   {
     if (u->left != NULL && u->right != NULL)
@@ -153,24 +162,23 @@ void RBTree<Key,T>::removeNode(Key x)
     }
     if (u->parent == NULL)
     {
-      // replace this with t
-      this->_value = t->_value;
-      this->_key = t->_key;
-      this->parent = t->parent;
-      this->left = t->left;
-      this->right = t->right;
+      Tr = t;
     }
     else
     {
       u->parent->link(t, x);
     }
     if (u->color == BLACK)
-      this->balanceDelete(t);
+      this->balanceDelete(t,u->parent);
     u->left = NULL;
     u->right = NULL;
     u->parent = NULL;
     delete u;
   }
+  //return the new root
+  while(Tr->parent)
+    Tr = Tr->parent;
+  return Tr;
 }
 
 template <class Key, class T>
@@ -187,11 +195,11 @@ void RBTree<Key,T>::balanceInsert()
       t->color = BLACK;
       t = NULL;
     }
-    else if (p->color == BLACK)
+    else if (p->color == BLACK) //case 2
     {
       t = NULL;
     }
-    else if (z->color == RED) //case 3
+    else if (z != NULL && z->color == RED) //case 3
     {
       p->color = z->color = BLACK;
       n->color = RED;
@@ -199,21 +207,21 @@ void RBTree<Key,T>::balanceInsert()
     }
     else
     {
-      if (t == p->right && p == n->left)
+      if (t == p->right && p == n->left) //case 4.a
       {
         p->rotateLeft();
         t = p;
       }
-      else if (t == p->left && p == n->left)
+      else if (t == p->left && p == n->right) //case 4.b
       {
         p->rotateRight();
         t = p;
       }
       else
       {
-        if (t==p->left && p==n->left)
+        if (t==p->left && p==n->left) //case 5.a
           n->rotateRight();
-        else
+        else if (t==p->right && p==n->right)
           n->rotateLeft();
         p->color = BLACK;
         n->color = RED;
@@ -224,11 +232,13 @@ void RBTree<Key,T>::balanceInsert()
 }
 
 template <class Key, class T>
-void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t)
+void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t, RBTree<Key,T>* p)
 {
-  while (t!=this && t->color == BLACK)
+  RBTree<Key,T>* Tr = this;
+  while ((t == NULL) || (t!=Tr && t->color == BLACK))
   {
-    RBTree<Key,T>* p = t->parent;
+    if (t)
+      p = t->parent;
     if (t == p->left)
     {
       RBTree<Key,T>* f = p->right;
@@ -242,24 +252,26 @@ void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t)
       }
       else
       {
-        if (ns->color == nd->color && nd->color == BLACK) //case 2
+        Color ns_color = (ns) ? ns->color : BLACK;
+        Color nd_color = (nd) ? nd->color : BLACK;
+        if (ns_color == nd_color && nd_color == BLACK) //case 2
         {
           f->color = RED;
           t = p;
         }
-        else if (ns->color == RED && nd->color == BLACK) //case 3
+        else if (ns_color == RED && nd_color == BLACK) //case 3
         {
           ns->color = BLACK;
           f->color = RED;
           f->rotateRight();
         }
-        else if (nd->color == RED) // case4
+        else if (nd_color == RED) // case4
         {
           f->color = p->color;
           p->color = BLACK;
           nd->color = BLACK;
           p->rotateLeft();
-          t = NULL;
+          t = Tr;
         }
       }
     }
@@ -276,27 +288,32 @@ void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t)
       }
       else
       {
-        if (ns->color == nd->color && nd->color == BLACK) //case 2
+        Color ns_color = (ns) ? ns->color : BLACK;
+        Color nd_color = (nd) ? nd->color : BLACK;
+        if (ns_color == nd_color && nd_color == BLACK) //case 2
         {
           f->color = RED;
           t = p;
         }
-        else if (ns->color == RED && nd->color == BLACK) //case 3
+        else if (nd_color == RED && ns_color == BLACK) //case 3
         {
-          ns->color = BLACK;
+          nd->color = BLACK;
           f->color = RED;
-          f->rotateRight();
+          f->rotateLeft();
         }
-        else if (nd->color == RED) // case4
+        else if (ns_color == RED) // case4
         {
           f->color = p->color;
           p->color = BLACK;
-          nd->color = BLACK;
+          ns->color = BLACK;
           p->rotateRight();
-          t = NULL;
+          t = Tr;
         }
       }
     }
+    //update root
+    while (Tr->parent)
+      Tr = Tr->parent;
   }
   if (t != NULL)
     t->color = BLACK;
@@ -306,13 +323,14 @@ template<class Key, class T>
 void RBTree<Key,T>::rotateLeft()
 {
   RBTree<Key,T>* x = this;
-  RBTree* y = this->right;
-  RBTree* p = this->parent;
-  this->right = y->left;
+  RBTree* y = x->right;
+  RBTree* p = x->parent;
+  x->right = y->left;
   if (y->left)
     y->left->parent = x;
   y->left = x;
   x->parent = y;
+  y->parent = p;
   if (p)
   {
     if (p->left == x)
@@ -326,13 +344,14 @@ template <class Key, class T>
 void RBTree<Key,T>::rotateRight()
 {
   RBTree<Key,T>* x = this;
-  RBTree* y = this->left;
-  RBTree* p = this->parent;
-  this->left = y->right;
+  RBTree* y = x->left;
+  RBTree* p = x->parent;
+  x->left = y->right;
   if (y->right)
     y->right->parent = x;
   y->right = x;
   x->parent = y;
+  y->parent = p;
   if (p)
   {
     if (p->left == x)

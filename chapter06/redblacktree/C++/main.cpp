@@ -7,24 +7,34 @@
 
 #include "rbtree.h"
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
 int main() {
-  RBTree<int,int>* t = new RBTree<int,int>(1, 10);
-  t->insertNode(2, 42);
-  t->insertNode(99, 99);
-  t->insertNode(2, 20);
-  t->insertNode(0, 1);
-  t->insertNode(5, 50);
-  t->insertNode(3, 30);
-  t->insertNode(4, 40);
-  t->insertNode(0, 42);
+  srand (time(NULL));
+  RBTree<int,int>* t = new RBTree<int,int>(rand(), rand());
 
-  t->checkTree();
-
-  cout << "Rimuovo nodo 0" << endl;
-  t->removeNode(0);
-
-  t->checkTree();
+  for (int i=0; i<5; i++)
+  {
+    vector<int> nums;
+    for (int i=0; i<10000; i++)
+    {
+      int temp = rand();
+      //cout << "insert " << temp << endl;
+      t = t->insertNode(temp,1);
+      t->checkTree();
+      nums.push_back(temp);
+    }
+    /*random_shuffle ( nums.begin(), nums.end() );
+    for (vector<int>::iterator i=nums.begin(); i!=nums.end(); i++)
+    {
+      cout << "remove " << *i << endl;
+      t = t->removeNode(*i);
+      t->checkTree();
+      }*/
+  }
 }
