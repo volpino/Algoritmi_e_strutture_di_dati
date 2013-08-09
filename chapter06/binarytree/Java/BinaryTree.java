@@ -36,8 +36,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
         return t;
     }
 
-    public void link(BinaryTree<T> u, T x) {
-        BinaryTree<T> v = this;
+    public static <T extends Comparable<? super T>> void link(BinaryTree<T> v, BinaryTree<T> u, T x) {
         if (u != null) {
             u.parent = v;
         }
@@ -64,11 +63,11 @@ public class BinaryTree<T extends Comparable<? super T>> {
         }
         else {
             BinaryTree<T> n = new BinaryTree<T>(x, v);
-            s.link(n, x);
+            link(s, n, x);
         }
     }
 
-    public void removeNode(T x) {
+    public BinaryTree<T> removeNode(T x) {
         BinaryTree<T> u = this.lookupNode(x);
         if (u != null) {
             if (u.left != null && u.right != null) {
@@ -89,18 +88,17 @@ public class BinaryTree<T extends Comparable<? super T>> {
             else {
                 t = u.right;
             }
+
+            link(u.parent, t, u.key());
+
             if (u.parent == null) {
-                // replace this with t
-                this._value = t._value;
-                this._key = t._key;
-                this.parent = t.parent;
-                this.left = t.left;
-                this.right = t.right;
-            }
-            else {
-                u.parent.link(t, x);
+                if (t != null) {
+                    t.parent = null;  // is the new root
+                }
+                return t;
             }
         }
+        return this;
     }
 
     public BinaryTree<T> min() {
@@ -152,26 +150,28 @@ public class BinaryTree<T extends Comparable<? super T>> {
     }
 
     public static void main(String[] args) {
-        BinaryTree<Integer> t = new BinaryTree<Integer>(1, 10);
+        BinaryTree<Integer> t = new BinaryTree<Integer>(4, 10);
         t.insertNode(2, 42);
-        t.insertNode(99, 99);
+        t.insertNode(5, 50);
         t.insertNode(2, 20);
         t.insertNode(0, 1);
-        t.insertNode(5, 50);
+        t.insertNode(99, 99);
         t.insertNode(3, 30);
-        t.insertNode(4, 40);
+        t.insertNode(1, 10);
         t.insertNode(0, 42);
+        t.insertNode(-1, 10);
 
         System.out.println("Il nodo minimo è " + t.min().key() + "=" + t.min().value());
         System.out.println("Il nodo massimo è " + t.max().key() + "=" + t.max().value());
 
-        System.out.println("Rimuovo nodo 0");
-        t.removeNode(0);
+        System.out.println("Rimuovo nodo 0 e 4");
+        t = t.removeNode(0);
+        t = t.removeNode(4);
 
         System.out.println("Il nodo minimo è " + t.min().key() + "=" + t.min().value());
         System.out.println("");
         System.out.println("Ora stampo i nodi dell'albero in ordine: ");
-        BinaryTree<Integer> s = t;
+        BinaryTree<Integer> s = t.min();
         while(s != null) {
             System.out.println("Nodo: " + s.key() + "=" + s.value());
             s = s.successorNode();
@@ -179,7 +179,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 
         System.out.println("");
         System.out.println("Ora stampo i nodi dell'albero in ordine inverso: ");
-        s = t.lookupNode(99);
+        s = t.max();
         while(s != null) {
             System.out.println("Nodo: " + s.key() + "=" + s.value());
             s = s.predecessorNode();

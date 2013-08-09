@@ -8,6 +8,7 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
+
 template <class T>
 class BinaryTree {
 public:
@@ -15,11 +16,9 @@ public:
 
   BinaryTree* lookupNode(T);
 
-  void link(BinaryTree*, T);
-
   void insertNode(T, T);
 
-  void removeNode(T);
+  BinaryTree* removeNode(T);
 
   BinaryTree* min();
 
@@ -34,20 +33,20 @@ public:
   T key() {return _key;}
   T value() {return _value;}
 
-private:
-  T _value;
-  T _key;
   BinaryTree* parent;
   BinaryTree* left;
   BinaryTree* right;
+
+private:
+  T _value;
+  T _key;
 };
 
 template <class T>
 BinaryTree<T>::BinaryTree(T k, T v) : _key(k), _value(v), parent(0), left(0), right(0) { }
 
 template <class T>
-BinaryTree<T>* BinaryTree<T>::lookupNode(T x)
-{
+BinaryTree<T>* BinaryTree<T>::lookupNode(T x) {
   BinaryTree<T>* t = this;
   while (t != 0 && t->key() != x) {
     t = x < t->key() ? t->left : t->right;
@@ -56,12 +55,11 @@ BinaryTree<T>* BinaryTree<T>::lookupNode(T x)
 }
 
 template <class T>
-void BinaryTree<T>::link(BinaryTree<T>* u, T x)
-{
-  BinaryTree<T>* v = this;
+void link(BinaryTree<T>* v, BinaryTree<T>* u, T x) {
   if (u != 0) {
     u->parent = v;
   }
+
   if (v != 0) {
     if (x < v->key()) {
       v->left = u;
@@ -87,17 +85,16 @@ void BinaryTree<T>::insertNode(T x, T v)
   }
   else {
     BinaryTree<T>* n = new BinaryTree<T>(x, v);
-    s->link(n, x);
+    link(s, n, x);
   }
 }
 
 
 template <class T>
-void BinaryTree<T>::removeNode(T x)
-{
+BinaryTree<T>* BinaryTree<T>::removeNode(T x) {
   BinaryTree<T>* u = this->lookupNode(x);
   if (u != 0) {
-    if (u->left != 0 && u->right != 0) {
+    if (u->left != 0 && u->right != 0) {  // target has 2 children
       BinaryTree<T>* s = u->right;
       while (s->left != 0) {
         s = s->left;
@@ -110,33 +107,38 @@ void BinaryTree<T>::removeNode(T x)
     }
 
     BinaryTree<T>* t;
-    if (u->left != 0 && u->right == 0) {
+    if (u->left != 0 && u->right == 0) {  // has only a left child
       t = u->left;
     }
-    else {
+    else {  // only right child or no children
       t = u->right;
     }
-    if (u->parent == 0) {
-      // replace this with t
-      this->_value = t->_value;
-      this->_key = t->_key;
-      this->parent = t->parent;
-      this->left = t->left;
-      this->right = t->right;
+
+    link(u->parent, t, u->key());
+
+    if (u->parent == 0) {  // u is the root, u==this
+      if (t != 0) {
+        t->parent = 0;  // t is the new root
+      }
+
+      this->left = 0;
+      this->right = 0;
+      delete this;
+
+      return t;
     }
     else {
-      u->parent->link(t, x);
+      u->parent = 0;
+      u->left = 0;
+      u->right = 0;
+      delete u;
     }
-    u->left = 0;
-    u->right = 0;
-    u->parent = 0;
-    delete u;
+    return this;
   }
 }
 
 template <class T>
-BinaryTree<T>* BinaryTree<T>::min()
-{
+BinaryTree<T>* BinaryTree<T>::min() {
   BinaryTree<T>* t = this;
   while (t->left != 0) {
     t = t->left;
@@ -145,8 +147,7 @@ BinaryTree<T>* BinaryTree<T>::min()
 }
 
 template <class T>
-BinaryTree<T>* BinaryTree<T>::max()
-{
+BinaryTree<T>* BinaryTree<T>::max() {
   BinaryTree<T>* t = this;
   while (t->right != 0) {
     t = t->right;
@@ -155,12 +156,8 @@ BinaryTree<T>* BinaryTree<T>::max()
 }
 
 template <class T>
-BinaryTree<T>* BinaryTree<T>::successorNode()
-{
+BinaryTree<T>* BinaryTree<T>::successorNode() {
   BinaryTree<T>* t = this;
-  if (t == 0) {
-    return t;
-  }
   if (t->right != 0) {
     return t->right->min();
   }
@@ -174,12 +171,8 @@ BinaryTree<T>* BinaryTree<T>::successorNode()
 
 
 template <class T>
-BinaryTree<T>* BinaryTree<T>::predecessorNode()
-{
+BinaryTree<T>* BinaryTree<T>::predecessorNode() {
   BinaryTree<T>* t = this;
-  if (t == 0) {
-    return t;
-  }
   if (t->left != 0) {
     return t->left->max();
   }
@@ -192,16 +185,16 @@ BinaryTree<T>* BinaryTree<T>::predecessorNode()
 }
 
 template <class T>
-BinaryTree<T>::~BinaryTree()
-{
-  BinaryTree<T>* u = this->successorNode();
-  while (u)
-  {
-    BinaryTree<T>* next = u->successorNode();
-    delete u;
-    u = next;
+BinaryTree<T>::~BinaryTree() {
+  if (this->left != 0) {
+    delete this->left;
+    this->left = 0;
+  }
+
+  if (this->right != 0) {
+    delete this->right;
+    this->right = 0;
   }
 }
-
 
 #endif

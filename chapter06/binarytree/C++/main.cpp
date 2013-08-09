@@ -11,26 +11,23 @@
 using namespace std;
 
 int main() {
-  BinaryTree<int>* t = new BinaryTree<int>(1, 10);
+  BinaryTree<int>* t = new BinaryTree<int>(4, 40);
   t->insertNode(2, 42);
-  t->insertNode(99, 99);
+  t->insertNode(5, 50);
   t->insertNode(2, 20);
   t->insertNode(0, 1);
-  t->insertNode(5, 50);
+  t->insertNode(99, 99);
   t->insertNode(3, 30);
-  t->insertNode(4, 40);
+  t->insertNode(1, 10);
   t->insertNode(0, 42);
+  t->insertNode(-1, 10);
 
-  cout << "Il nodo minimo è " << t->min()->key() << "=" << t->min()->value() << endl;
-  cout << "Il nodo massimo è " << t->max()->key() << "=" << t->max()->value() << endl;
+  cout << "Rimuovo nodi 0 e 4" << endl;
+  t = t->removeNode(0);
+  t = t->removeNode(4);
 
-  cout << "Rimuovo nodo 0" << endl;
-  t->removeNode(0);
-
-  cout << "Il nodo minimo è " << t->min()->key() << "=" << t->min()->value() << endl;
-  cout << endl;
   cout << "Ora stampo i nodi dell'albero in ordine: " << endl;
-  BinaryTree<int>* s = t;
+  BinaryTree<int>* s = t->min();
   while(s) {
     cout << "Nodo: " << s->key() << "=" << s->value() << endl;
     s = s->successorNode();
@@ -38,7 +35,7 @@ int main() {
 
   cout << endl;
   cout << "Ora stampo i nodi dell'albero in ordine inverso: " << endl;
-  s = t->lookupNode(99);
+  s = t->max();
   while(s) {
     cout << "Nodo: " << s->key() << "=" << s->value() << endl;
     s = s->predecessorNode();
