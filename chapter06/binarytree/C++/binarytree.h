@@ -103,6 +103,8 @@ BinaryTree<T>* BinaryTree<T>::removeNode(T x) {
       u->_key = s->key();
       u->_value = s->value();
 
+      x = s->key();
+
       u = s;
     }
 
@@ -114,7 +116,7 @@ BinaryTree<T>* BinaryTree<T>::removeNode(T x) {
       t = u->right;
     }
 
-    link(u->parent, t, u->key());
+    link(u->parent, t, x);
 
     if (u->parent == 0) {  // u is the root, u==this
       if (t != 0) {

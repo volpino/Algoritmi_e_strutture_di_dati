@@ -24,7 +24,7 @@ int main() {
 
   cout << "Rimuovo nodi 0 e 4" << endl;
   t = t->removeNode(0);
-  t = t->removeNode(4);
+  //t = t->removeNode(4);
 
   cout << "Ora stampo i nodi dell'albero in ordine: " << endl;
   BinaryTree<int>* s = t->min();

@@ -78,6 +78,9 @@ public class BinaryTree<T extends Comparable<? super T>> {
 
                 u._key = s.key();
                 u._value = s.value();
+
+                x = s.key();
+
                 u = s;
             }
 
@@ -89,7 +92,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
                 t = u.right;
             }
 
-            link(u.parent, t, u.key());
+            link(u.parent, t, x);
 
             if (u.parent == null) {
                 if (t != null) {
