@@ -21,7 +21,7 @@ int main() {
   for (int i=0; i<10; i++)
   {
     vector<int> nums;
-    for (int i=0; i<100000; i++)
+    for (int j=0; j<100000; j++)
     {
       int temp = rand();
       cout << "insert " << temp << endl;
@@ -30,10 +30,10 @@ int main() {
       nums.push_back(temp);
     }
     random_shuffle ( nums.begin(), nums.end() );
-    for (vector<int>::iterator i=nums.begin(); i!=nums.end(); i++)
+    for (vector<int>::iterator it=nums.begin(); it!=nums.end(); it++)
     {
-      cout << "remove " << *i << endl;
-      t = t->removeNode(*i);
+      cout << "remove " << *it << endl;
+      t = t->removeNode(*it);
       t->checkTree();
     }
   }

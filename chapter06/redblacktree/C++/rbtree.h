@@ -1,3 +1,9 @@
+/*
+ * Chapter 6
+ * Paragraph 2
+ *
+ */
+
 #ifndef RBTREE_H
 #define RBTREE_H
 
@@ -173,9 +179,6 @@ RBTree<Key,T>* RBTree<Key,T>::removeNode(Key x)
     }
     if (u->color == BLACK)
       this->balanceDelete(t,u->parent);
-    u->left = NULL;
-    u->right = NULL;
-    u->parent = NULL;
     delete u;
   }
   //return the new root
