@@ -148,6 +148,7 @@ RBTree<Key,T>* RBTree<Key,T>::removeNode(Key x)
       u->_key = s->_key;
       u->_value = s->_value;
 
+      x = s->_key;
       u = s;
     }
 
@@ -162,7 +163,9 @@ RBTree<Key,T>* RBTree<Key,T>::removeNode(Key x)
     }
     if (u->parent == NULL)
     {
+      //Tr is the new root
       Tr = t;
+      Tr->parent = NULL;
     }
     else
     {
@@ -271,6 +274,9 @@ void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t, RBTree<Key,T>* p)
           p->color = BLACK;
           nd->color = BLACK;
           p->rotateLeft();
+          //update root
+          while (Tr->parent)
+            Tr = Tr->parent;
           t = Tr;
         }
       }
@@ -307,6 +313,9 @@ void RBTree<Key,T>::balanceDelete(RBTree<Key, T>* t, RBTree<Key,T>* p)
           p->color = BLACK;
           ns->color = BLACK;
           p->rotateRight();
+          //update root
+          while (Tr->parent)
+            Tr = Tr->parent;
           t = Tr;
         }
       }
