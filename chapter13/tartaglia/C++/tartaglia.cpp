@@ -15,8 +15,6 @@ void tartaglia(int n) {
 
   for (int i=2; i<n; i++) {
     for (int j=1; j<i; j++) {
-      cout << "i=" << i << " j=" << j << endl;
-      cout << C[i-1][j-1] + C[i-1][j] << endl;
       C[i][j] = C[i-1][j-1] + C[i-1][j];
     }
   }
