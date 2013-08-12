@@ -114,7 +114,6 @@ public final class GraphFunctions {
         System.out.println("Visiting node: " + u.key + "=" + u.value);
         for (Node<T> v : g.adj(u)) {
             if (!visited.contains(v)) {
-                visited.add(v);
                 dfs_rec(g, v, visited);
             }
         }

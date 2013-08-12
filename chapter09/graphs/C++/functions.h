@@ -147,7 +147,6 @@ void dfs_rec(Graph<T>& g, Node<T>* u, set<Node<T>* >& visited) {
   for (iter it=adj->begin(); it != adj->end(); it++) {
     Node<T>* v = *it;
     if (visited.find(v) == visited.end()) {
-      visited.insert(v);
       dfs_rec(g, v, visited);
     }
   }
