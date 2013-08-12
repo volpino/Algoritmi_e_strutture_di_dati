@@ -280,7 +280,9 @@ void scc(Graph<T>& g, map<Node<T>*, int>& id) {
   set<Node<T>* >* vertices = g.v();
   for (iter it=vertices->begin(); it != vertices->end(); it++) {
     Node<T>* v = *it;
-    dfs_stack(g, visited, s, v);
+    if (visited.find(v) == visited.end()) {
+      dfs_stack(g, visited, s, v);
+    }
   }
 
   ListsGraph<T> gt = ListsGraph<T>(g.num_vertex);

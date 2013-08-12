@@ -213,7 +213,9 @@ public final class GraphFunctions {
 
         Set<Node<T> > vertices = g.v();
         for (Node<T> v : vertices) {
-            dfs_stack(g, visited, s, v);
+            if (!visited.contains(v)) {
+                dfs_stack(g, visited, s, v);
+            }
         }
 
         ListsGraph<T> gt = new ListsGraph<T>(g.numVertex());
