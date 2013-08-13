@@ -19,7 +19,7 @@ public:
   // used for shortest paths algorithms
   bool operator() (const Node<T>& a, const Node<T>& b) {
     return a.count < b.count;
-  }
+  };
 };
 
 template <class T>

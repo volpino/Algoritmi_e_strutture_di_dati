@@ -41,12 +41,13 @@ public:
     return array[0]->value;
   };
 
-  bool insert(T value, int priority) {
+  HeapItem<T>* insert(T value, int priority) {
     if (used_slots >= total) {
-      return false;
+      return 0;
     }
 
-    array[used_slots] = new HeapItem<T>(value, priority, used_slots);
+    HeapItem<T>* new_item = new HeapItem<T>(value, priority, used_slots);
+    array[used_slots] = new_item;
 
     int i = used_slots;
     while (i > 0 && array[i]->priority < array[parent(i)]->priority) {
@@ -56,7 +57,7 @@ public:
 
     used_slots++;
 
-    return true;
+    return new_item;
   };
 
   void minHeapRestore(int i) {
@@ -86,6 +87,18 @@ public:
     delete array[used_slots];  // deallocate HeapItem
 
     minHeapRestore(0);
+  };
+
+  void decrease(HeapItem<T>* x, int p) {
+    if (p > x->priority) {
+      return;
+    }
+    x->priority = p;
+    int i = x->pos;
+    while (i>0 && array[i]->priority < array[parent(i)]->priority) {
+      swap(i, parent(i));
+      i = parent(i);
+    }
   };
 
   ~HeapQueue() {

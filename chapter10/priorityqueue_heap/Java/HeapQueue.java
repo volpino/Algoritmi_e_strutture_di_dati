@@ -9,6 +9,19 @@
 import java.util.ArrayList;
 
 
+class HeapItem<T extends Comparable<? super T>> {
+    public T value;
+    public int priority;
+    public int pos;
+
+    public HeapItem(T value, int priority, int pos) {
+        this.value = value;
+        this.priority = priority;
+        this.pos = pos;
+    }
+}
+
+
 public class HeapQueue<T extends Comparable<? super T>> {
     private int used_slots;
     private int total;
@@ -30,12 +43,13 @@ public class HeapQueue<T extends Comparable<? super T>> {
         return array.get(0).value;
     }
 
-    public boolean insert(T value, int priority) {
+    public HeapItem<T> insert(T value, int priority) {
         if (used_slots >= total) {
-            return false;
+            return null;
         }
 
-        array.add(new HeapItem<T>(value, priority, used_slots));
+        HeapItem<T> new_item = new HeapItem<T>(value, priority, used_slots);
+        array.add(new_item);
 
         int i = used_slots;
         while (i > 0 && array.get(i).priority < array.get(parent(i)).priority) {
@@ -45,7 +59,7 @@ public class HeapQueue<T extends Comparable<? super T>> {
 
         used_slots++;
 
-        return true;
+        return new_item;
     }
 
     public void minHeapRestore(int i) {
@@ -75,6 +89,18 @@ public class HeapQueue<T extends Comparable<? super T>> {
         minHeapRestore(0);
     }
 
+    void decrease(HeapItem<T> x, int p) {
+        if (p > x.priority) {
+            return;
+        }
+        x.priority = p;
+        int i = x.pos;
+        while (i>0 && array.get(i).priority < array.get(parent(i)).priority) {
+            swap(i, parent(i));
+            i = parent(i);
+        }
+    }
+
     private void swap(int i, int j) {
         HeapItem<T> first = array.get(i);
         HeapItem<T> second = array.get(j);
@@ -96,18 +122,6 @@ public class HeapQueue<T extends Comparable<? super T>> {
 
     private int right(int i) {
         return (2 * i) + 1;
-    }
-
-    class HeapItem<T extends Comparable<? super T>> {
-        public T value;
-        public int priority;
-        public int pos;
-
-        public HeapItem(T value, int priority, int pos) {
-            this.value = value;
-            this.priority = priority;
-            this.pos = pos;
-        }
     }
 
     public static void main(String args[]) {
