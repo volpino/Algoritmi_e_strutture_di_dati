@@ -7,7 +7,7 @@
 using namespace std;
 
 template <class T>
-int test_functions(Graph<T>& g) {
+void test_functions(Graph<T>& g) {
   Node<int>* a = new Node<int>(1, 1);
   Node<int>* b = new Node<int>(2, 2);
   Node<int>* c = new Node<int>(3, 3);

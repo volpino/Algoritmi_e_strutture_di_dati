@@ -35,6 +35,11 @@ public:
     adj_list[id(a)].push_back(b);
   };
 
+  virtual void insertEdge(Node<T>* a, Node<T>* b, int w) {
+    for (int i=0; i<w; i++)
+      insertEdge(a,b);
+  };
+
   virtual void deleteNode(Node<T>* node) {
     if (id(node) >= this->num_vertex || available_ids.find(id(node)) != available_ids.end()) {
       return;

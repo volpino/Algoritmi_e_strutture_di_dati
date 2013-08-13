@@ -43,6 +43,13 @@ public:
     matrix[id(a)][id(b)]++;
   };
 
+  virtual void insertEdge(Node<T>* a, Node<T>* b, int w) {
+    if (vertices.find(a) == vertices.end() || vertices.find(b) == vertices.end()) {
+      return;
+    }
+    matrix[id(a)][id(b)] = w;
+  };
+
   virtual void deleteNode(Node<T>* node) {
     if (id(node) >= this->num_vertex || available_ids.find(id(node)) != available_ids.end()) {
       return;

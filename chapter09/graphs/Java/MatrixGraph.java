@@ -46,6 +46,13 @@ public class MatrixGraph<T extends Comparable<? super T>> implements Graph<T> {
         matrix[id(a)][id(b)]++;
     }
 
+    public void insertEdge(Node<T> a, Node<T> b, int w) {
+        if (!vertices.contains(a) || !vertices.contains(b)) {
+            return;
+        }
+        matrix[id(a)][id(b)] = w;
+    }
+
     public void deleteNode(Node<T> node) {
         if (id(node) >= this.num_vertex || available_ids.contains(id(node))) {
             return;

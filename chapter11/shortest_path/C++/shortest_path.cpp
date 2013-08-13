@@ -19,18 +19,18 @@ int main() {
   g.insertNode(node5);
   g.insertNode(node6);
 
-  for (int i=0; i<1; i++) g.insertEdge(node1, node2);
-  for (int i=0; i<2; i++) g.insertEdge(node1, node3);
+  g.insertEdge(node1, node2, 1);
+  g.insertEdge(node1, node3, 2);
 
-  for (int i=0; i<1; i++) g.insertEdge(node2, node5);
+  g.insertEdge(node2, node5, 1);
 
-  for (int i=0; i<3; i++) g.insertEdge(node3, node2);
-  for (int i=0; i<3; i++) g.insertEdge(node3, node4);
+  g.insertEdge(node3, node2, 3);
+  g.insertEdge(node3, node4, 3);
 
-  for (int i=0; i<2; i++) g.insertEdge(node4, node6);
+  g.insertEdge(node4, node6, 2);
 
-  for (int i=0; i<2; i++) g.insertEdge(node5, node4);
-  for (int i=0; i<5; i++) g.insertEdge(node5, node6);
+  g.insertEdge(node5, node4, 2);
+  g.insertEdge(node5, node6, 5);
 
 
   int t[10];

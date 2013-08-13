@@ -25,8 +25,11 @@ public:
 template <class T>
 class Graph {
 public:
+  typedef typename std::set<Node<T>* >::iterator iterator;
+
   virtual void insertNode(Node<T>*) = 0;
   virtual void insertEdge(Node<T>*, Node<T>*) = 0;
+  virtual void insertEdge(Node<T>*, Node<T>*, int) = 0;
   virtual void deleteNode(Node<T>*) = 0;
   virtual void deleteEdge(Node<T>*, Node<T>*) = 0;
   virtual std::set<Node<T>* >* adj(Node<T>*) = 0;

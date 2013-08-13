@@ -39,6 +39,11 @@ public class ListsGraph<T extends Comparable<? super T>> implements Graph<T> {
         adj_list.get(id(a)).add(b);
     }
 
+    public void insertEdge(Node<T> a, Node<T> b, int w) {
+      for (int i=0; i<w; i++)
+        insertEdge(a,b);
+    }
+
     public void deleteNode(Node<T> node) {
         if (id(node) >= this.num_vertex || available_ids.contains(id(node))) {
             return;
