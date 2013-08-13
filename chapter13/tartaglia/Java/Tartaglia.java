@@ -1,3 +1,9 @@
+/*
+ * Chapter 13
+ *
+ * Tartaglia triangle
+ */
+
 public class Tartaglia {
     private final int DIM = 100;
     public long C[][] = new long[DIM][DIM];

@@ -1,3 +1,10 @@
+/*
+ * Chapter 14
+ * Paragraph 1
+ *
+ * Rucksack problem with real numbers
+ */
+
 #include <algorithm>
 #include <vector>
 #include <iostream>

@@ -1,3 +1,8 @@
+/*
+ * Chapter 13
+ * Paragraph 1
+ */
+
 public class StringMatching {
     final int DIM = 10000;
     private int D[][] = new int[DIM][DIM];

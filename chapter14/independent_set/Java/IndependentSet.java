@@ -1,3 +1,11 @@
+/*
+ * Chapter 14
+ * Paragraph 2
+ *
+ * Independent set of intervals, each one has weight 1
+ */
+
+
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Set;

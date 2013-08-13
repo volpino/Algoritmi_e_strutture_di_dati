@@ -1,3 +1,10 @@
+/*
+ * Chapter 13
+ * Paragraph 4
+ *
+ * Fibonacci in O(1) space and O(n) time
+ */
+
 public class Fibonacci {
     public static int compute(int n) {
         int f0, f1, f2;

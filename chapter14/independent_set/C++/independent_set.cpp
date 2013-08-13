@@ -1,3 +1,10 @@
+/*
+ * Chapter 14
+ * Paragraph 2
+ *
+ * Independent set of intervals, each one has weight 1
+ */
+
 #include <vector>
 #include <set>
 #include <algorithm>

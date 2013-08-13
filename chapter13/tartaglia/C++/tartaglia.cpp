@@ -1,3 +1,9 @@
+/*
+ * Chapter 13
+ *
+ * Tartaglia triangle
+ */
+
 #include <iostream>
 
 using namespace std;
