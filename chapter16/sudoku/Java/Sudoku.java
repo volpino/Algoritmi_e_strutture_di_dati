@@ -78,8 +78,6 @@ public class Sudoku {
       }
       if (sudoku(S, i+1))
       {
-        if (!fixed)
-          S[y][x] = 0;
         return true;
       }
     }
