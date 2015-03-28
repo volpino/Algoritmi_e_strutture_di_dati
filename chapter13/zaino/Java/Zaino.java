@@ -10,12 +10,12 @@ public class Zaino {
     public int D[][] = new int[DIM][DIM];
 
     public int zaino(int p[], int v[], int i, int c) {
-        if (i < 0 || c == 0) {
-            return 0;
-        }
-
         if (c < 0) {
             return Integer.MIN_VALUE;
+        }
+
+        if (i < 0 || c == 0) {
+            return 0;
         }
 
         if (D[i][c] == -1) {
