@@ -16,12 +16,12 @@ using namespace std;
 int D[DIM][DIM];
 
 int zaino(int p[], int v[], int i, int c) {
-  if (i < 0 || c == 0) {
-    return 0;
-  }
-
   if (c < 0) {
     return INT_MIN;
+  }
+
+  if (i < 0 || c == 0) {
+    return 0;
   }
 
   if (D[i][c] == -1) {
